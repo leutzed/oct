@@ -1,13 +1,51 @@
 * {
   padding: 0;
   margin: 0;
-  
+  box-sizing: border-box;
 }
 
 body {
   height: 100vh;
+  background-color: #f9f6f2;
 }
 
+p {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 3rem;
+}
+
+.header {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.header p {
+  text-align: center;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.timer {
+  transform: translateY(100%);
+}
+
+.scramble {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+/*
 div.header {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border-radius: 0.5rem;
@@ -38,4 +76,4 @@ scramble-display {
   position: absolute;
   right: 0;
   bottom: 0;
-}
+}*/

@@ -2,20 +2,25 @@
 <html>
 
 <head>
-  <title>Cronômetro</title>
+  <title>(OCT) Open CubeTimer</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.cubing.net/js/scramble-display" type="module"></script>
 </head>
 
 <body>
-  <div class="header">
-    <p id="scramble-text"></p>
-  </div>
   <div class="container">
-    <p id="tempo">00:00.00</p>
-    <scramble-display id="scramble-display" scramble=""></scramble-display>
+    <div class="header">
+      <p id="scramble-text"></p>
+    </div>
+    <div class="timer justify-center">
+      <p id="tempo">00:00.00</p>
+    </div>
+    <div class="scramble">
+      <!-- <img style="height: 256px; width: 384px;" src="https://images.unsplash.com/photo-1696860545582-b897f0d31f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt=""> -->
+      <scramble-display id="scramble-display" scramble=""></scramble-display>
+    </div>
   </div>
 </body>
-<script src="cronometro.js" type="module"></script>
+<script src="timer.js" type="module"></script>
 
 </html>
