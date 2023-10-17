@@ -1,133 +1,116 @@
-let emExecucao = false;
-let decimos = 0;
-let segundos = 0;
-let minutos = 0;
-let intervalo;
-const tempoElemento = document.querySelector("#tempo");
+import { generateNewScramble } from './scrambles.js'
+
+let inExecution = false;
+let tenths = 0;
+let seconds = 0;
+let minutes = 0;
+let interval;
+let solvedScramble;
+
+let timeRecords = [];
+
+const elementTime = document.querySelector("#tempo");
+solvedScramble = generateNewScramble();
+console.log(solvedScramble)
+
 
 document.addEventListener("keydown", function (event) {
   if (event.key === " ") {
-    if (emExecucao == true) {
-      pararCronometro();
+    if (inExecution == true) {
+      stopTimer();
+      solvedScramble = generateNewScramble();
     } else {
-      iniciarCronometro();
+      startTimer();
     }
   }
 });
 
-function formatarTempo() {
-  return `${minutos.toString().padStart(2, "0")}:${segundos
+function formatTime() {
+  return `${minutes.toString().padStart(2, "0")}:${seconds
     .toString()
-    .padStart(2, "0")}.${decimos.toString().padStart(2, "0")}`;
+    .padStart(2, "0")}.${tenths.toString().padStart(2, "0")}`;
 }
 
-function iniciarCronometro() {
-  if (!emExecucao) {
-    if (minutos !== 0 || segundos !== 0 || decimos !== 0) {
-      resetarCronometro();
+function startTimer() {
+  if (!inExecution) {
+    if (minutes !== 0 || seconds !== 0 || tenths !== 0) {
+      resetTimer();
     }
-    emExecucao = true;
-    intervalo = setInterval(function () {
-      decimos++;
-      if (decimos === 100) {
-        decimos = 0;
-        segundos++;
-        if (segundos === 60) {
-          segundos = 0;
-          minutos++;
+    inExecution = true;
+    interval = setInterval(function () {
+      tenths++;
+      if (tenths === 100) {
+        tenths = 0;
+        seconds++;
+        if (seconds === 60) {
+          seconds = 0;
+          minutes++;
         }
       }
-      tempoElemento.textContent = formatarTempo();
+      elementTime.textContent = formatTime();
     }, 10);
   }
 }
 
-function pararCronometro() {
-  if (emExecucao) {
-    emExecucao = false;
-    clearInterval(intervalo);
-  }
-}
+function stopTimer() {
+  if (inExecution) {
+    inExecution = false;
+    clearInterval(interval);
 
-function resetarCronometro() {
-  emExecucao = false;
-  clearInterval(intervalo);
-  decimos = 0;
-  segundos = 0;
-  minutos = 0;
-  tempoElemento.textContent = "00:00.00";
-}
+    // Verificar se o tempo é diferente de zero antes de salvar no localStorage
+    const currentTime = formatTime();
+    if (currentTime !== "00:00.00") {
+      // Criar um registro de tempo com os tempos e o parâmetro "scramble"
+      const timeRecord = {
+        time: currentTime,
+        scramble: solvedScramble,
+      };
 
-/*
-let decimos = 0;
-let segundos = 0;
-let minutos = 0;
-let intervalo;
-let emExecucao = false;
+      // Adicionar o registro de tempo à matriz de registros
+      timeRecords.push(timeRecord);
 
-const tempoElemento = document.getElementById("tempo");
-const iniciarBotao = document.getElementById("iniciar");
-const pararBotao = document.getElementById("parar");
-const resetarBotao = document.getElementById("resetar");
-
-function formatarTempo() {
-  return `${minutos.toString().padStart(2, "0")}:${segundos
-    .toString()
-    .padStart(2, "0")}.${decimos.toString().padStart(2, "0")}`;
-}
-
-function iniciarCronometro() {
-  if (!emExecucao) {
-    if (minutos === 0 && segundos === 0 && decimos === 0) {
-      resetarCronometro();
+      // Converter a matriz de registros em uma string JSON e salvar no localStorage
+      localStorage.setItem("times", JSON.stringify(timeRecords));
     }
-    emExecucao = true;
-    intervalo = setInterval(function () {
-      decimos++;
-      if (decimos === 100) {
-        decimos = 0;
-        segundos++;
-        if (segundos === 60) {
-          segundos = 0;
-          minutos++;
-        }
-      }
-      tempoElemento.textContent = formatarTempo();
-    }, 10);
   }
 }
 
-function pararCronometro() {
-  if (emExecucao) {
-    emExecucao = false;
-    clearInterval(intervalo);
+function resetTimer() {
+  inExecution = false;
+  clearInterval(interval);
+  tenths = 0;
+  seconds = 0;
+  minutes = 0;
+  elementTime.textContent = "00:00.00";
+}
+
+function populateTableFromLocalStorage() {
+  // Obter os dados do localStorage
+  const storedData = localStorage.getItem("times");
+
+  if (storedData) {
+    // Converter os dados JSON de volta para uma matriz de registros
+    const timeRecords = JSON.parse(storedData);
+
+    // Selecionar a tabela onde você deseja adicionar os registros
+    const table = document.querySelector("#sua-tabela"); // Substitua "sua-tabela" pelo ID da sua tabela
+
+    // Limpar a tabela antes de adicionar novos registros (se necessário)
+    table.innerHTML = "";
+
+    // Iterar pelos registros e adicionar cada um à tabela
+    timeRecords.forEach((record, index) => {
+      const row = table.insertRow();
+      const cellIndex = row.insertCell(0);
+      cellIndex.textContent = index + 1; // Número do registro
+      const cellTime = row.insertCell(1);
+      cellTime.textContent = record.time; // Tempo
+      const cellScramble = row.insertCell(2);
+      cellScramble.textContent = record.scramble; // Scramble
+    });
   }
 }
 
-function resetarCronometro() {
-  emExecucao = false;
-  clearInterval(intervalo);
-  decimos = 0;
-  segundos = 0;
-  minutos = 0;
-  tempoElemento.textContent = "00:00.00";
-}
+// Chame a função para preencher a tabela ao carregar a página
+//populateTableFromLocalStorage();
 
-function alternarCronometro() {
-  if (emExecucao) {
-    pararCronometro();
-  } else {
-    iniciarCronometro();
-  }
-}
-
-document.addEventListener("keydown", function (event) {
-  if (event.key === " ") {
-    alternarCronometro();
-  }
-});
-
-iniciarBotao.addEventListener("click", alternarCronometro);
-pararBotao.addEventListener("click", pararCronometro);
-resetarBotao.addEventListener("click", resetarCronometro);
-*/

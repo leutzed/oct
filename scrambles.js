@@ -1,12 +1,11 @@
 const scrambleView = document.querySelector("#scramble-display")
 const scrambleText = document.querySelector("#scramble-text")
-console.log(scrambleText)
 
 function getRandomMove(previousMove) {
   const allMoves = ['R', 'U', 'F', 'D', 'B', 'L'];
   const variations = ['', '\'', '2'];
 
-  // Gere um movimento aleatório
+  // Gera um movimento aleatório
   let randomMove = '';
   let randomVariation = '';
 
@@ -32,8 +31,12 @@ function generateRandomSequence() {
   return sequence;
 }
 
-const sequence = generateRandomSequence();
-strSequence = sequence.join(' ');
+export function generateNewScramble() {
+  const sequence = generateRandomSequence();
+  let strSequence = sequence.join(' ');
+  
+  scrambleView.attributes[1].value = strSequence;
+  scrambleText.textContent = strSequence;
 
-scrambleView.attributes[1].value = strSequence;
-scrambleText.textContent = strSequence;
+  return strSequence
+}
