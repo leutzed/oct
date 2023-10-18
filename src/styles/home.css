@@ -45,14 +45,22 @@ p {
   grid-area: info;
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  margin: 16px;
+  padding: 16px;
 }
 
 .timer {
   grid-area: timer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .scramble {
   grid-area: scramble;
+  display: flex;
+  justify-content: end;
+  align-items: end;
 }
 
 scramble-display {
