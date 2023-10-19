@@ -22,7 +22,7 @@ export function timeToDate(time) {
 
 export function dateToTime(time) {
   // create a function that recives a Date() and transform to this format: 00.22
-  const tenths = time/1000;
+  const tenths = time / 1000;
 
-  console.log(tenths);
+  return tenths;
 }
