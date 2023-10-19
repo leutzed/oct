@@ -1,57 +1,59 @@
 import { formatTimeWithoutMinutes, timeToDate } from "./utils.js";
 
-export function calculateAo5(arrayTempos) {
-    if (arrayTempos.length < 5) {
-        return "O array deve conter pelo menos 5 tempos.";
+export function calculateAo5(arrayTimes) {
+    let arrayInDate = [];
+
+    if (arrayTimes.length < 5) {
+        return "The array needs to have at least 5 records";
     }
 
-    arrayTempos = arrayTempos.slice(-5);
-
-    // Ordena o array em ordem crescente
-    arrayTempos.sort(function (a, b) {
-        return a - b;
+    arrayTimes.forEach(function (unit) {
+        let formattedTime = formatTimeWithoutMinutes(unit);
+        let timeInDate = timeToDate(formattedTime)
+        arrayInDate.push(timeInDate)
     });
 
-    // Remove o melhor e o pior tempo
-    arrayTempos = arrayTempos.slice(1, -1);
-
-    // Calcula a média dos tempos restantes
-    var soma = arrayTempos.reduce(function (total, tempo) {
-        const formattedTime = formatTimeWithoutMinutes(tempo)
-        const timeInDate = timeToDate(formattedTime)
-        return total + timeInDate;
+    arrayInDate = arrayInDate.slice(-5);
+    arrayInDate.sort(function (a, b) {
+        return a - b;
+    });
+    
+    arrayInDate = arrayInDate.slice(1, -1);
+    var sum = arrayInDate.reduce(function (total, time) {
+        return total + time;
     }, 0);
 
-    var media = soma / arrayTempos.length;
+    var average = sum / arrayInDate.length;
 
-    return media;
+    return average;
 }
 
-export function calculateAo12(arrayTempos) {
-    if (arrayTempos.length < 12) {
-        return "O array deve conter pelo menos 12 tempos.";
+export function calculateAo12(arrayTimes) {
+    let arrayInDate = [];
+
+    if (arrayTimes.length < 12) {
+        return "The array needs to have at least 12 records";
     }
 
-    arrayTempos = arrayTempos.slice(-12);
-
-    // Ordena o array em ordem crescente
-    arrayTempos.sort(function (a, b) {
-        return a - b;
+    arrayTimes.forEach(function (unit) {
+        let formattedTime = formatTimeWithoutMinutes(unit);
+        let timeInDate = timeToDate(formattedTime)
+        arrayInDate.push(timeInDate)
     });
 
-    // Remove o melhor e o pior tempo
-    arrayTempos = arrayTempos.slice(1, -1);
-
-    // Calcula a média dos tempos restantes
-    var soma = arrayTempos.reduce(function (total, tempo) {
-        const formattedTime = formatTimeWithoutMinutes(tempo)
-        const timeInDate = timeToDate(formattedTime)
-        return total + timeInDate;
+    arrayInDate = arrayInDate.slice(-12);
+    arrayInDate.sort(function (a, b) {
+        return a - b;
+    });
+    
+    arrayInDate = arrayInDate.slice(1, -1);
+    var sum = arrayInDate.reduce(function (total, time) {
+        return total + time;
     }, 0);
 
-    var media = soma / arrayTempos.length;
+    var average = sum / arrayInDate.length;
 
-    return media;
+    return average;
 }
 
 export function totalOfSolves (arrayTimes) {
@@ -59,14 +61,19 @@ export function totalOfSolves (arrayTimes) {
 }
 
 export function getBestSolve (arrayTimes) {
-    arrayTimes.sort(function (a, b) {
-        return a - b;
+    let arrayInDate = [];
+
+    arrayTimes.forEach(function (unit) {
+        let formattedTime = formatTimeWithoutMinutes(unit);
+        let timeInDate = timeToDate(formattedTime)
+        arrayInDate.push(timeInDate)
     });
 
-    arrayTimes = arrayTimes.slice(-1);
+    arrayInDate.sort(function (a, b) {
+        return b - a;
+    });
 
-    const formattedTime = formatTimeWithoutMinutes(arrayTimes[0])
-    const timeInDate = timeToDate(formattedTime)
+    arrayInDate = arrayInDate.slice(-1);
 
-    return timeInDate
+    return arrayInDate[0];
 }
