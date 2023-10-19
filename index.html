@@ -11,21 +11,37 @@
 <body>
   <div class="container">
     <div class="header">
-      <p id="scramble-text"></p>
+      <div class="scramble-text-wrapper">
+        <p id="scramble-text"></p>
+      </div>
     </div>
-    <div class="timer justify-center">
+    <div class="averages">
+      <p class="list">best:
+        <span id="best">---</span>
+      </p>
+      <p class="list">ao5:
+        <span id="ao5">---</span>
+      </p>
+      <p class="list">ao12:
+        <span id="ao12">---</span>
+      </p>
+      <p class="list">total:
+        <span id="total">---</span>
+      </p>
+    </div>
+
+    <div class="info" id="time-data">
+      <div id="times">
+      </div>
+    </div>
+    <div class="timer">
       <p id="tempo">00:00.00</p>
     </div>
-    <div class="footer">
-      <div id="time-data" class="data">
-        <div class="time" id="time"></div>
-      </div>
-      <div class="scramble">
-        <!-- <img style="height: 256px; width: 384px;"
-          src="https://images.unsplash.com/photo-1696860545582-b897f0d31f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-          alt=""> -->
-        <scramble-display id="scramble-display" scramble=""></scramble-display>
-      </div>
+    <div class="scramble">
+      <!-- <img style="height: 128px; width: 192px;"
+        src="https://images.unsplash.com/photo-1696860545582-b897f0d31f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+        alt=""> -->
+      <scramble-display id="scramble-display" scramble=""></scramble-display>
     </div>
   </div>
 </body>

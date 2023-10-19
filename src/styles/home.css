@@ -10,55 +10,69 @@ body {
 }
 
 p {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: 3rem;
 }
 
+p.list {
+  font-size: 1rem;
+}
+
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "header header header"
+    ". timer ."
+    "averages scramble info";
+}
+
 .header {
+  grid-area: header;
+}
+
+.scramble-text-wrapper {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border-radius: 0.5rem;
   padding: 1rem;
 }
 
-.header p {
+.scramble-text-wrapper p {
   text-align: center;
 }
 
-.container {
-  height: 100%;
+.averages {
+  grid-area: averages;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: start;
+  justify-content: end;
+}
+
+.info {
+  grid-area: info;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  margin: 16px;
+  padding: 16px;
 }
 
 .timer {
-  transform: translateY(100%);
-}
-
-.scramble {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.justify-center {
-  display: flex;
-  justify-content: center;
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.time {
-  border-radius: 0.5rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  grid-area: timer;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.5rem;
-  padding: 0.75rem;
-  font-family: 'Courier New', Courier, monospace;
+}
+
+.scramble {
+  grid-area: scramble;
+  display: flex;
+  justify-content: center;
+  align-items: end;
 }
 
 scramble-display {
