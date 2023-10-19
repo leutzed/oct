@@ -1,3 +1,5 @@
+import { formatTimeWithoutMinutes, timeToDate } from "./utils.js";
+
 export function calcularMediaTempos(arrayTempos) {
     if (arrayTempos.length < 5) {
       return "O array deve conter pelo menos 5 tempos.";
@@ -9,20 +11,18 @@ export function calcularMediaTempos(arrayTempos) {
     arrayTempos.sort(function (a, b) {
       return a - b;
     });
-    console.log(arrayTempos)
   
     // Remove o melhor e o pior tempo
     arrayTempos = arrayTempos.slice(1, -1);
-    console.log(arrayTempos)
     
     // Calcula a média dos tempos restantes
     var soma = arrayTempos.reduce(function (total, tempo) {
-      return total + tempo;
+        const formattedTime = formatTimeWithoutMinutes(tempo)
+        const timeInDate = timeToDate(formattedTime)
+      return total + timeInDate;
     }, 0);
-  
-    console.log(soma);
+
     var media = soma / arrayTempos.length;
-    console.log(media);
   
     return media;
   }

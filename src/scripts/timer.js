@@ -1,5 +1,5 @@
 import { generateNewScramble } from "./scrambles.js";
-import { formatTimeWithoutMinutes } from "./utils.js";
+import { dateToTime, formatTimeWithoutMinutes, objectToArray } from "./utils.js";
 import { calcularMediaTempos } from './math.js'
 
 let inExecution = false;
@@ -8,7 +8,6 @@ let seconds = 0;
 let minutes = 0;
 let interval;
 let solvedScramble;
-let timesToCalculate;
 
 let timeRecords = [];
 
@@ -87,23 +86,19 @@ function populateTableFromLocalStorage() {
 
   if (storedData) {
     const timeRecords = JSON.parse(storedData);
-    timesToCalculate = timeRecords;
-
+    
     const table = document.querySelector("#times");
+    const ao5 = document.querySelector("#ao5");
 
     table.innerHTML = "";
+    ao5.innerHTML = "";
+
+    let timesArray = objectToArray(timeRecords);
+    let average = calcularMediaTempos(timesArray);
+    populateAverage(average, ao5);
 
     timeRecords.forEach((record, index) => {
       adicionarDivComDado(formatTimeWithoutMinutes(record.time), table)
-
-      let valores = [];
-
-      // Itera sobre os registros e extrai a propriedade "valor"
-      timesToCalculate.forEach(function (registro) {
-        valores.push(record.time);
-      });
-
-      calcularMediaTempos(valores);
     });
   }
 
@@ -115,4 +110,9 @@ function adicionarDivComDado(dado, table) {
   par.textContent = dado;
 
   table.appendChild(par)
+}
+
+function populateAverage(average, element) {
+  dateToTime(average)
+  element.textContent = Number(average).toFixed(2);
 }
