@@ -1,5 +1,6 @@
 import { generateNewScramble } from "./scrambles.js";
 import { formatTimeWithoutMinutes } from "./utils.js";
+import { calcularMediaTempos } from './math.js'
 
 let inExecution = false;
 let tenths = 0;
@@ -7,6 +8,7 @@ let seconds = 0;
 let minutes = 0;
 let interval;
 let solvedScramble;
+let timesToCalculate;
 
 let timeRecords = [];
 
@@ -85,22 +87,32 @@ function populateTableFromLocalStorage() {
 
   if (storedData) {
     const timeRecords = JSON.parse(storedData);
+    timesToCalculate = timeRecords;
 
-    const table = document.querySelector("#time-data");
+    const table = document.querySelector("#times");
 
     table.innerHTML = "";
 
     timeRecords.forEach((record, index) => {
-      adicionarDivComDado(formatTimeWithoutMinutes(record.time))
+      adicionarDivComDado(formatTimeWithoutMinutes(record.time), table)
+
+      let valores = [];
+
+      // Itera sobre os registros e extrai a propriedade "valor"
+      timesToCalculate.forEach(function (registro) {
+        valores.push(record.time);
+      });
+
+      calcularMediaTempos(valores);
     });
   }
+
 }
 
-function adicionarDivComDado(dado) {
-  const div = document.createElement("div");
-  div.classList.add('time')
-  div.textContent = dado;
+function adicionarDivComDado(dado, table) {
+  const par = document.createElement("p")
+  par.classList.add('list')
+  par.textContent = dado;
 
-  const container = document.getElementById("time-data");
-  container.appendChild(div);
+  table.appendChild(par)
 }
