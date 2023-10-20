@@ -4,15 +4,26 @@
 <head>
   <title>(oCt) Open CubeTimer</title>
   <link rel="stylesheet" href="src/styles/home.css">
-  <script src="https://cdn.cubing.net/js/scramble-display" type="module"></script>
+  <link rel="stylesheet" href="src/styles/darkMode.css">
+  <!-- <script src="https://cdn.cubing.net/js/scramble-display" type="module"></script> -->
   <link rel="shortcut icon" href="src/assets/ico.png" type="image/x-icon">
 </head>
 
 <body>
   <div class="container">
+
+    <div class='toggle-switch'>
+      <label>
+        <input type='checkbox'>
+        <span class='slider'></span>
+      </label>
+    </div>
+
+
     <div class="header">
       <div class="scramble-text-wrapper">
         <p id="scramble-text"></p>
+        <button></button>
       </div>
     </div>
     <div class="averages">
@@ -38,13 +49,14 @@
       <p id="tempo">00:00.00</p>
     </div>
     <div class="scramble">
-      <!-- <img style="height: 128px; width: 192px;"
+      <img style="height: 128px; width: 192px;"
         src="https://images.unsplash.com/photo-1696860545582-b897f0d31f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-        alt=""> -->
+        alt="">
       <scramble-display id="scramble-display" scramble=""></scramble-display>
     </div>
   </div>
 </body>
 <script src="src/scripts/timer.js" type="module"></script>
+<script src="src/scripts/darkMode.js"></script>
 
 </html>
