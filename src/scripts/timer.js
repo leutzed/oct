@@ -14,6 +14,7 @@ let timeoutId;
 const elementTime = document.querySelector("#tempo");
 
 solvedScramble = generateNewScramble();
+populateTableFromLocalStorage();
 document.addEventListener("keydown", handleKeyDown);
 
 function handleKeyDown(event) {
@@ -75,9 +76,14 @@ function stopTimer() {
     inExecution = false;
     clearInterval(interval);
 
+    let id = timeRecords.length + 1;
+
     const currentTime = formatTime();
     if (currentTime !== "00:00.00") {
+      let timeRecords = JSON.parse(localStorage.getItem("times")) || [];
+
       const timeRecord = {
+        id: id,
         time: currentTime,
         scramble: solvedScramble,
       };

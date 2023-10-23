@@ -1,6 +1,19 @@
 import { dateToTime, formatTimeWithoutMinutes, objectToArray } from "./utils.js";
 import { calculateAo5, calculateAo12, totalOfSolves, getBestSolve } from './math.js'
 
+
+document.addEventListener("click", openAlertRemoveTime);
+
+//TODO
+function openAlertRemoveTime(event) {
+  if (event.target.id == 'list') {
+    let listElement = document.querySelector('[data-time="$"]');
+    console.log(listElement);
+    // code to open alert for removing time
+
+  }
+}
+
 export function populateTableFromLocalStorage() {
   const storedData = localStorage.getItem("times");
 
@@ -28,15 +41,16 @@ export function populateTableFromLocalStorage() {
     populateBestSolve(bestSolve, best)
 
     timeRecords.forEach((record, index) => {
-      addDivWithData(formatTimeWithoutMinutes(record.time), table)
+      addDivWithData(formatTimeWithoutMinutes(record.time), table, record.id)
     });
   }
 }
 
-function addDivWithData(data, table) {
+function addDivWithData(data, table, id) {
   const paragraph = document.createElement("p")
   paragraph.classList.add('list')
   paragraph.id = 'list';
+  paragraph.setAttribute('data-time', id);
   paragraph.textContent = data;
 
   table.appendChild(paragraph)
