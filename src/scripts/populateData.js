@@ -36,6 +36,7 @@ export function populateTableFromLocalStorage() {
 function addDivWithData(data, table) {
   const paragraph = document.createElement("p")
   paragraph.classList.add('list')
+  paragraph.id = 'list';
   paragraph.textContent = data;
 
   table.appendChild(paragraph)
