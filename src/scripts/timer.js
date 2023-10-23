@@ -14,16 +14,37 @@ let timeRecords = [];
 const elementTime = document.querySelector("#tempo");
 solvedScramble = generateNewScramble();
 
-document.addEventListener("keydown", function (event) {
-  if (event.key === " ") {
-    if (inExecution == true) {
+let timeoutId;
+let spacePressed = false;
+
+function handleKeyDown(event) {
+  if (event.code === "Space") {
+    if (!spacePressed && !inExecution) {
+      spacePressed = true;
+      console.log(spacePressed);
+      timeoutId = setTimeout(() => {
+        if (spacePressed) {
+          document.addEventListener("keyup", handleKeyUp);
+        }
+      }, 1000);
+    } else if (inExecution) {
       stopTimer();
-      solvedScramble = generateNewScramble();
-    } else {
-      startTimer();
     }
   }
-});
+}
+ 
+function handleKeyUp(event) {
+  console.log('sortou');
+  if (event.code === "Space") {
+    if (spacePressed) {
+      spacePressed = false;
+      startTimer();
+      clearTimeout(timeoutId);
+    }
+  }
+}
+
+document.addEventListener("keydown", handleKeyDown);
 
 function formatTime() {
   return `${minutes.toString().padStart(2, "0")}:${seconds

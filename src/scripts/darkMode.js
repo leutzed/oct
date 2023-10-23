@@ -1,7 +1,7 @@
 const toggle = document.querySelector(".slider");
 let theme = window.localStorage.getItem("theme");
 
-// Verifique se o valor em localStorage está vazio e defina-o como 'light' por padrão
+// check if the value in localStorage is empty and set it to 'light' by default
 if (!theme) {
   theme = "light";
   window.localStorage.setItem("theme", theme);
