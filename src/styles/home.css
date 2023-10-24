@@ -83,6 +83,14 @@ p.list {
   justify-content: center;
 }
 
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
 .scramble {
   grid-area: scramble;
   display: flex;

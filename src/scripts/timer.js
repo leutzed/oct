@@ -17,15 +17,20 @@ const elementTime = document.querySelector("#tempo");
 
 solvedScramble = generateNewScramble();
 populateTableFromLocalStorage();
-document.addEventListener("keydown", handleKeyDown);
+
+if (!inExecution) {
+  document.addEventListener("keydown", handleKeyDown);
+}
 
 function handleKeyDown(event) {
   if (event.code === "Space") {
     if (!spacePressed && !inExecution) {
       spacePressed = true;
-      console.log(spacePressed);
+      elementTime.classList.add('red');
       timeoutId = setTimeout(() => {
-        if (spacePressed) {
+        if (spacePressed && !inExecution) {
+          elementTime.classList.remove('red');
+          elementTime.classList.add('green');
           document.addEventListener("keyup", handleKeyUp);
         }
       }, 1000);
@@ -37,7 +42,7 @@ function handleKeyDown(event) {
 }
  
 function handleKeyUp(event) {
-  console.log('sortou');
+  elementTime.classList.remove('green');
   if (event.code === "Space") {
     if (spacePressed) {
       spacePressed = false;
