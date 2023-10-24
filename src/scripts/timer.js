@@ -14,7 +14,7 @@ let solvedScramble;
 let timeoutId;
 
 const elementTime = document.querySelector("#tempo");
-const container = document.querySelector(".container");
+const container = document.querySelector(".timer");
 
 solvedScramble = generateNewScramble();
 populateTableFromLocalStorage();
