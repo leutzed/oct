@@ -1,17 +1,28 @@
 import { dateToTime, formatTimeWithoutMinutes, objectToArray } from "./utils.js";
 import { calculateAo5, calculateAo12, totalOfSolves, getBestSolve } from './math.js'
 
-
 document.addEventListener("click", openAlertRemoveTime);
 
 //TODO
 function openAlertRemoveTime(event) {
-  if (event.target.id == 'list') {
-    let listElement = document.querySelector('[data-time="$"]');
-    console.log(listElement);
-    // code to open alert for removing time
+  if (event.target.id == 'list-unique-time') {
+    // Pega o elemento que acionou o evento de clique
+    let listElement = event.target;
 
+    let isUserRemovingThisTime = confirm(`Deseja remover o tempo ${listElement.textContent}?`);
+    if (isUserRemovingThisTime) { 
+      // Remove o elemento da lista
+      listElement.remove();
+      removeTimeFromLocalStorage(listElement.getAttribute('data-time'));
+      populateTableFromLocalStorage();
+    }
   }
+}
+
+function removeTimeFromLocalStorage(dateTimeId) {
+  let timesArray = JSON.parse(localStorage.getItem("times"));
+  timesArray.splice(dateTimeId, 1);
+  localStorage.setItem("times", JSON.stringify(timesArray));
 }
 
 export function populateTableFromLocalStorage() {
@@ -41,7 +52,7 @@ export function populateTableFromLocalStorage() {
     populateBestSolve(bestSolve, best)
 
     timeRecords.forEach((record, index) => {
-      addDivWithData(formatTimeWithoutMinutes(record.time), table, record.id)
+      addDivWithData(formatTimeWithoutMinutes(record.time), table, index)
     });
   }
 }
@@ -49,7 +60,7 @@ export function populateTableFromLocalStorage() {
 function addDivWithData(data, table, id) {
   const paragraph = document.createElement("p")
   paragraph.classList.add('list')
-  paragraph.id = 'list';
+  paragraph.id = 'list-unique-time';
   paragraph.setAttribute('data-time', id);
   paragraph.textContent = data;
 

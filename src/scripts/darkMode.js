@@ -21,7 +21,6 @@ if (theme === "dark") {
 }
 
 toggle.addEventListener("click", () => {
-  console.log('click');
   toggleDarkMode();
 });
 

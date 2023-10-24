@@ -1,6 +1,8 @@
 import { generateNewScramble } from "./scrambles.js";
 import { populateTableFromLocalStorage } from "./populateData.js";
 
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+
 let inExecution = false;
 let spacePressed = false;
 let tenths = 0;
@@ -29,6 +31,7 @@ function handleKeyDown(event) {
       }, 1000);
     } else if (inExecution) {
       stopTimer();
+      solvedScramble = generateNewScramble();
     }
   }
 }
@@ -76,11 +79,10 @@ function stopTimer() {
     inExecution = false;
     clearInterval(interval);
 
-    let id = timeRecords.length + 1;
-
     const currentTime = formatTime();
     if (currentTime !== "00:00.00") {
       let timeRecords = JSON.parse(localStorage.getItem("times")) || [];
+      let id = uuidv4();
 
       const timeRecord = {
         id: id,
