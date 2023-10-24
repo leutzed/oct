@@ -14,16 +14,19 @@ let solvedScramble;
 let timeoutId;
 
 const elementTime = document.querySelector("#tempo");
+const container = document.querySelector(".container");
 
 solvedScramble = generateNewScramble();
 populateTableFromLocalStorage();
 
 if (!inExecution) {
-  document.addEventListener("keydown" || "touchstart", handleKeyDown);
+  document.addEventListener("keydown", handleKeyDown);
+  container.addEventListener("touchstart", handleKeyDown);
 }
 
 function handleKeyDown(event) {
-  if (event.code === "Space") {
+  console.log(event);
+  if (event.code === "Space" || event.type === "touchstart") {
     if (!spacePressed && !inExecution) {
       spacePressed = true;
       elementTime.classList.add('red');
@@ -31,7 +34,8 @@ function handleKeyDown(event) {
         if (spacePressed && !inExecution) {
           elementTime.classList.remove('red');
           elementTime.classList.add('green');
-          document.addEventListener("keyup" || 'touchend', handleKeyUp);
+          document.addEventListener("keyup", handleKeyUp);
+          container.addEventListener("touchend", handleKeyUp);
         }
       }, 1000);
     } else if (inExecution) {
@@ -43,7 +47,7 @@ function handleKeyDown(event) {
  
 function handleKeyUp(event) {
   elementTime.classList.remove('green');
-  if (event.code === "Space") {
+  if (event.code === "Space" || event.type === "touchend") {
     if (spacePressed) {
       spacePressed = false;
       startTimer();
