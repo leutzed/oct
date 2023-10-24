@@ -1,3 +1,12 @@
+:root{
+  --white: #fff;
+  --dark-white: #f9f6f2;
+  --light-gray: #aaa;
+  --gray: #3d3d3d;
+  --dark-gray: #212121;
+  --black: #181818;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -6,7 +15,13 @@
 
 body {
   height: 100vh;
-  background-color: #f9f6f2;
+  background-color: var(--dark-white);
+  color: var(--black);
+}
+
+.dark-mode {
+  background-color: var(--dark-gray);
+  color: var(--dark-white);
 }
 
 p {
@@ -14,8 +29,12 @@ p {
   font-size: 3rem;
 }
 
-p.list {
+p.list, p.time-indicators {
   font-size: 1rem;
+}
+
+p.list::after {
+  content: "|";
 }
 
 .container {
@@ -61,11 +80,25 @@ p.list {
   padding: 16px;
 }
 
+.times {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .timer {
   grid-area: timer;
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
 }
 
 .scramble {

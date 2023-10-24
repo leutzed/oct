@@ -4,6 +4,7 @@
 <head>
   <title>(oCt) Open CubeTimer</title>
   <link rel="stylesheet" href="src/styles/home.css">
+  <link rel="stylesheet" href="src/styles/darkMode.css">
   <script src="https://cdn.cubing.net/js/scramble-display" type="module"></script>
   <link rel="shortcut icon" href="src/assets/ico.png" type="image/x-icon">
 </head>
@@ -11,27 +12,33 @@
 <body>
   <div class="container">
     <div class="header">
+      <div class='toggle-switch'>
+        <label>
+          <input type='checkbox'>
+          <span class='slider'></span>
+        </label>
+      </div>
       <div class="scramble-text-wrapper">
         <p id="scramble-text"></p>
       </div>
     </div>
     <div class="averages">
-      <p class="list">best:
+      <p class="time-indicators">best:
         <span id="best">---</span>
       </p>
-      <p class="list">ao5:
+      <p class="time-indicators">ao5:
         <span id="ao5">---</span>
       </p>
-      <p class="list">ao12:
+      <p class="time-indicators">ao12:
         <span id="ao12">---</span>
       </p>
-      <p class="list">total:
+      <p class="time-indicators">total:
         <span id="total">---</span>
       </p>
     </div>
 
     <div class="info" id="time-data">
-      <div id="times">
+      <div id="times" class="times">
       </div>
     </div>
     <div class="timer">
@@ -46,5 +53,6 @@
   </div>
 </body>
 <script src="src/scripts/timer.js" type="module"></script>
+<script src="src/scripts/darkMode.js"></script>
 
 </html>

@@ -1,29 +1,60 @@
 import { generateNewScramble } from "./scrambles.js";
-import { dateToTime, formatTimeWithoutMinutes, objectToArray } from "./utils.js";
-import { calculateAo5, calculateAo12, totalOfSolves, getBestSolve } from './math.js'
+import { populateTableFromLocalStorage } from "./populateData.js";
+
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
 let inExecution = false;
+let spacePressed = false;
 let tenths = 0;
 let seconds = 0;
 let minutes = 0;
+let timeRecords = [];
 let interval;
 let solvedScramble;
-
-let timeRecords = [];
+let timeoutId;
 
 const elementTime = document.querySelector("#tempo");
-solvedScramble = generateNewScramble();
+const container = document.querySelector(".container");
 
-document.addEventListener("keydown", function (event) {
-  if (event.key === " ") {
-    if (inExecution == true) {
+solvedScramble = generateNewScramble();
+populateTableFromLocalStorage();
+
+if (!inExecution) {
+  document.addEventListener("keydown", handleKeyDown);
+  container.addEventListener("touchstart", handleKeyDown);
+}
+
+function handleKeyDown(event) {
+  console.log(event);
+  if (event.code === "Space" || event.type === "touchstart") {
+    if (!spacePressed && !inExecution) {
+      spacePressed = true;
+      elementTime.classList.add('red');
+      timeoutId = setTimeout(() => {
+        if (spacePressed && !inExecution) {
+          elementTime.classList.remove('red');
+          elementTime.classList.add('green');
+          document.addEventListener("keyup", handleKeyUp);
+          container.addEventListener("touchend", handleKeyUp);
+        }
+      }, 1000);
+    } else if (inExecution) {
       stopTimer();
       solvedScramble = generateNewScramble();
-    } else {
-      startTimer();
     }
   }
-});
+}
+ 
+function handleKeyUp(event) {
+  elementTime.classList.remove('green');
+  if (event.code === "Space" || event.type === "touchend") {
+    if (spacePressed) {
+      spacePressed = false;
+      startTimer();
+      clearTimeout(timeoutId);
+    }
+  }
+}
 
 function formatTime() {
   return `${minutes.toString().padStart(2, "0")}:${seconds
@@ -59,7 +90,11 @@ function stopTimer() {
 
     const currentTime = formatTime();
     if (currentTime !== "00:00.00") {
+      let timeRecords = JSON.parse(localStorage.getItem("times")) || [];
+      let id = uuidv4();
+
       const timeRecord = {
+        id: id,
         time: currentTime,
         scramble: solvedScramble,
       };
@@ -79,75 +114,4 @@ function resetTimer() {
   seconds = 0;
   minutes = 0;
   elementTime.textContent = "00:00.00";
-}
-
-function populateTableFromLocalStorage() {
-  const storedData = localStorage.getItem("times");
-
-  if (storedData) {
-    const timeRecords = JSON.parse(storedData);
-    
-    const table = document.querySelector("#times");
-    const ao5 = document.querySelector("#ao5");
-    const ao12 = document.querySelector("#ao12");
-    const total = document.querySelector("#total");
-    const best = document.querySelector("#best");
-
-    table.innerHTML = "";
-    ao5.innerHTML = "";
-
-    let timesArray = objectToArray(timeRecords);
-    let averageOf5 = calculateAo5(timesArray);
-    let averageOf12 = calculateAo12(timesArray);
-    let numberOfSolves = totalOfSolves(timesArray)
-    let bestSolve = getBestSolve(timesArray)
-
-    populateAverage(averageOf5, ao5);
-    populateAverage(averageOf12, ao12);
-    populateNumberOfSolves(numberOfSolves, total);
-    populateBestSolve(bestSolve, best)
-
-
-    timeRecords.forEach((record, index) => {
-      adicionarDivComDado(formatTimeWithoutMinutes(record.time), table)
-    });
-  }
-
-}
-
-function adicionarDivComDado(dado, table) {
-  const par = document.createElement("p")
-  par.classList.add('list')
-  par.textContent = dado;
-
-  table.appendChild(par)
-}
-
-function populateAverage(average, element) {
-  let stringAverage = dateToTime(average)
-  let numberAverage = Number(stringAverage);
-
-  if (isNaN(numberAverage)) {
-    element.textContent = '---';
-  } else {
-    element.textContent = numberAverage.toFixed(2);
-  }
-}
-
-function populateNumberOfSolves (string, element) {
-  if (string) {
-    element.textContent = string;
-  } else {
-    element.textContent = '---';
-  }
-}
-
-function populateBestSolve (string, element) {
-  let printBestTime = Number(dateToTime(string)); 
-
-  if (isNaN(printBestTime)) {
-    element.textContent = '---';
-  } else {
-    element.textContent = printBestTime;
-  }
 }
