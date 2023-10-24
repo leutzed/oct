@@ -19,7 +19,7 @@ solvedScramble = generateNewScramble();
 populateTableFromLocalStorage();
 
 if (!inExecution) {
-  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("keydown" || "touchstart", handleKeyDown);
 }
 
 function handleKeyDown(event) {
@@ -31,7 +31,7 @@ function handleKeyDown(event) {
         if (spacePressed && !inExecution) {
           elementTime.classList.remove('red');
           elementTime.classList.add('green');
-          document.addEventListener("keyup", handleKeyUp);
+          document.addEventListener("keyup" || 'touchend', handleKeyUp);
         }
       }, 1000);
     } else if (inExecution) {
