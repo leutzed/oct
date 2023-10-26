@@ -38,7 +38,7 @@ p.list::after {
 }
 
 .container {
-  height: 100vh;
+  height: 95vh;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;

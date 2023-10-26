@@ -5,54 +5,84 @@
   <title>(oCt) Open CubeTimer</title>
   <link rel="stylesheet" href="src/styles/home.css">
   <link rel="stylesheet" href="src/styles/darkMode.css">
-  <script src="https://cdn.cubing.net/js/scramble-display" type="module"></script>
+  <link rel="stylesheet" href="src/styles/tabs.css">
+  <!-- <script src="https://cdn.cubing.net/js/scramble-display" type="module"></script> -->
   <link rel="shortcut icon" href="src/assets/ico.png" type="image/x-icon">
 </head>
 
+<!-- https://codepen.io/webcrunchblog/pen/YOZQXP -->
+
 <body>
-  <div class="container">
-    <div class="header">
-      <div class='toggle-switch'>
-        <label>
-          <input type='checkbox'>
-          <span class='slider'></span>
-        </label>
+
+  <div class="tabs">
+    <div class="tab-content">
+      <div class="tab-pane" id="logs">
+        <p>Lorem ipsum dolor sit amet </p>
       </div>
-      <div class="scramble-text-wrapper">
-        <p id="scramble-text"></p>
+
+
+      <div class="tab-pane active" id="timer">
+        <div class="container">
+          <div class="header">
+            <div class='toggle-switch'>
+              <label>
+                <input type='checkbox'>
+                <span class='slider'></span>
+              </label>
+            </div>
+            <div class="scramble-text-wrapper">
+              <p id="scramble-text"></p>
+            </div>
+          </div>
+          <div class="averages">
+            <p class="time-indicators">best:
+              <span id="best">---</span>
+            </p>
+            <p class="time-indicators">ao5:
+              <span id="ao5">---</span>
+            </p>
+            <p class="time-indicators">ao12:
+              <span id="ao12">---</span>
+            </p>
+            <p class="time-indicators">total:
+              <span id="total">---</span>
+            </p>
+          </div>
+      
+          <div class="info" id="time-data">
+            <div id="times" class="times">
+            </div>
+          </div>
+          <div class="timer">
+            <p id="tempo">00:00.00</p>
+          </div>
+          <div class="scramble">
+            <!-- <img style="height: 128px; width: 192px;"
+              src="https://images.unsplash.com/photo-1696860545582-b897f0d31f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+              alt=""> -->
+            <scramble-display id="scramble-display" scramble=""></scramble-display>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="averages">
-      <p class="time-indicators">best:
-        <span id="best">---</span>
-      </p>
-      <p class="time-indicators">ao5:
-        <span id="ao5">---</span>
-      </p>
-      <p class="time-indicators">ao12:
-        <span id="ao12">---</span>
-      </p>
-      <p class="time-indicators">total:
-        <span id="total">---</span>
-      </p>
+
+
+      <div class="tab-pane" id="stats">
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. </p>
+      </div>
     </div>
 
-    <div class="info" id="time-data">
-      <div id="times" class="times">
-      </div>
-    </div>
-    <div class="timer">
-      <p id="tempo">00:00.00</p>
-    </div>
-    <div class="scramble">
-      <!-- <img style="height: 128px; width: 192px;"
-        src="https://images.unsplash.com/photo-1696860545582-b897f0d31f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-        alt=""> -->
-      <scramble-display id="scramble-display" scramble=""></scramble-display>
-    </div>
+    <ul id="nav-tab" class="nav">
+      <li><a href="#logs">Logs</a></li>
+      <li class="active"><a href="#timer">Timer</a></li>
+      <li><a href="#stats">Stats</a></li>
+    </ul>
   </div>
+
+
+  
 </body>
 <script src="src/scripts/timer.js" type="module"></script>
 <script src="src/scripts/darkMode.js"></script>
+<script src="src/scripts/tabs.js"></script>
 
 </html>
