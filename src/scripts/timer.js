@@ -37,7 +37,7 @@ function handleKeyDown(event) {
           document.addEventListener("keyup", handleKeyUp);
           container.addEventListener("touchend", handleKeyUp);
         }
-      }, 1000);
+      }, 300);
     } else if (inExecution) {
       stopTimer();
       solvedScramble = generateNewScramble();

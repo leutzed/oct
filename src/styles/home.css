@@ -47,7 +47,7 @@ p.list::after {
   grid-template-areas:
     "header header header"
     ". timer ."
-    "averages scramble info";
+    "averages . scramble";
 }
 
 .header {
@@ -93,6 +93,10 @@ p.list::after {
   user-select: none;
 }
 
+.timer #tempo {
+  transform: translateY(5vh);
+}
+
 .red {
   color: red;
 }
@@ -104,7 +108,7 @@ p.list::after {
 .scramble {
   grid-area: scramble;
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: end;
 }
 

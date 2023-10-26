@@ -17,19 +17,17 @@
   <div class="tabs">
     <div class="tab-content">
       <div class="tab-pane" id="logs">
-        <p>Lorem ipsum dolor sit amet </p>
+        <div class="info" id="time-data">
+          <div id="times" class="times">
+          </div>
+        </div>
+
       </div>
 
 
       <div class="tab-pane active" id="timer">
         <div class="container">
           <div class="header">
-            <div class='toggle-switch'>
-              <label>
-                <input type='checkbox'>
-                <span class='slider'></span>
-              </label>
-            </div>
             <div class="scramble-text-wrapper">
               <p id="scramble-text"></p>
             </div>
@@ -49,10 +47,6 @@
             </p>
           </div>
       
-          <div class="info" id="time-data">
-            <div id="times" class="times">
-            </div>
-          </div>
           <div class="timer">
             <p id="tempo">00:00.00</p>
           </div>
@@ -71,11 +65,19 @@
       </div>
     </div>
 
-    <ul id="nav-tab" class="nav">
-      <li><a href="#logs">Logs</a></li>
-      <li class="active"><a href="#timer">Timer</a></li>
-      <li><a href="#stats">Stats</a></li>
-    </ul>
+    <div class="nav-wrapper">
+      <div class='toggle-switch'>
+        <label>
+          <input type='checkbox'>
+          <span class='slider'></span>
+        </label>
+      </div>
+      <ul id="nav-tab" class="nav">
+        <li><a href="#logs">Logs</a></li>
+        <li class="active"><a href="#timer">Timer</a></li>
+        <li><a href="#stats">Stats</a></li>
+      </ul>
+    </div>
   </div>
 
 

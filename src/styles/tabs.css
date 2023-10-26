@@ -7,6 +7,7 @@ body {
   max-width: 800px;
   margin: 0 auto;
   */
+  
 .tabs {
   height: 100vh;
   display: flex;
@@ -19,6 +20,7 @@ ul {
   padding: 0;
   display: flex;
   justify-content: center;
+
 }
 
 ul li {
@@ -27,25 +29,30 @@ ul li {
 
 ul li a {
   text-decoration: none;
-  color: darkgray;
+  color: var(--light-gray);
   padding: 10px;
   transition: all 0.3s ease-in-out;
   border-bottom: 1px solid transparent;
 }
 
 ul li a:hover {
-  color: gray;
+  color: var(--dark-gray);
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: center;
 }
 
 .nav .active a {
-  color: slateblue;
-  border-bottom: 1px solid slateblue;
+  color: var(--black);
+  border-bottom: 1px solid var(--black);
 }
 
 .nav .active a:hover {
   border-color: transparent;
-  background: slateblue;
-  color: white;
+  background: var(--black);
+  color: var(--white);
 }
 
 .tab-pane {

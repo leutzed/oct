@@ -2,7 +2,7 @@ function onTabClick(event) {
   let activeTabs = document.querySelectorAll('.active');
   
   activeTabs.forEach(function(tab) {
-    tab.className = tab.className.replace('active', '');
+    tab.className = tab.className.replace(' active', '');
   });
   
   event.target.parentElement.className += ' active';
