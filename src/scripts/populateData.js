@@ -1,5 +1,6 @@
 import { dateToTime, formatTimeWithoutMinutes, objectToArray } from "./utils.js";
 import { calculateAo5, calculateAo12, totalOfSolves, getBestSolve } from './math.js'
+// import { populateChart } from './stats.js'
 
 document.addEventListener("click", openAlertRemoveTime);
 
@@ -15,6 +16,7 @@ function openAlertRemoveTime(event) {
       listElement.remove();
       removeTimeFromLocalStorage(listElement.getAttribute('data-time'));
       populateTableFromLocalStorage();
+      // populateChart();
     }
   }
 }

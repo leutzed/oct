@@ -1,5 +1,6 @@
 import { generateNewScramble } from "./scrambles.js";
 import { populateTableFromLocalStorage } from "./populateData.js";
+// import { populateChart } from './stats.js'
 
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
@@ -18,6 +19,7 @@ const container = document.querySelector(".timer");
 
 solvedScramble = generateNewScramble();
 populateTableFromLocalStorage();
+// populateChart();
 
 if (!inExecution) {
   document.addEventListener("keydown", handleKeyDown);
@@ -103,6 +105,7 @@ function stopTimer() {
 
       localStorage.setItem("times", JSON.stringify(timeRecords));
       populateTableFromLocalStorage();
+      // populateChart();
     }
   }
 }
