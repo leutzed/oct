@@ -1,5 +1,6 @@
 import { dateToTime, formatTimeWithoutMinutes, objectToArray } from "./utils.js";
 import { calculateAo5, calculateAo12, totalOfSolves, getBestSolve } from './math.js'
+// import { populateChart } from './stats.js'
 
 document.addEventListener("click", openAlertRemoveTime);
 
@@ -9,12 +10,15 @@ function openAlertRemoveTime(event) {
     // Pega o elemento que acionou o evento de clique
     let listElement = event.target;
 
-    let isUserRemovingThisTime = confirm(`Deseja remover o tempo ${listElement.textContent}?`);
+    getTimeFromLocalStorage(listElement.getAttribute('data-time'));
+
+    let isUserRemovingThisTime = confirm(`${listElement.textContent} - [] \n Deseja remover o tempo ${listElement.textContent}?`);
     if (isUserRemovingThisTime) { 
       // Remove o elemento da lista
       listElement.remove();
       removeTimeFromLocalStorage(listElement.getAttribute('data-time'));
       populateTableFromLocalStorage();
+      // populateChart();
     }
   }
 }
@@ -23,6 +27,12 @@ function removeTimeFromLocalStorage(dateTimeId) {
   let timesArray = JSON.parse(localStorage.getItem("times"));
   timesArray.splice(dateTimeId, 1);
   localStorage.setItem("times", JSON.stringify(timesArray));
+}
+
+function getTimeFromLocalStorage(dateTimeId) {
+  let timesArray = JSON.parse(localStorage.getItem("times"));
+
+  console.log(timesArray[dateTimeId]);
 }
 
 export function populateTableFromLocalStorage() {

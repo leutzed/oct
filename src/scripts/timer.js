@@ -1,5 +1,6 @@
 import { generateNewScramble } from "./scrambles.js";
 import { populateTableFromLocalStorage } from "./populateData.js";
+// import { populateChart } from './stats.js'
 
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
@@ -8,16 +9,18 @@ let spacePressed = false;
 let tenths = 0;
 let seconds = 0;
 let minutes = 0;
-let timeRecords = [];
 let interval;
 let solvedScramble;
 let timeoutId;
+let isIntervalPassed = false;
+let cancelTimer = false;
 
-const elementTime = document.querySelector("#tempo");
+const elementTime = document.querySelector("#time");
 const container = document.querySelector(".timer");
 
 solvedScramble = generateNewScramble();
 populateTableFromLocalStorage();
+// populateChart();
 
 if (!inExecution) {
   document.addEventListener("keydown", handleKeyDown);
@@ -25,27 +28,51 @@ if (!inExecution) {
 }
 
 function handleKeyDown(event) {
-  console.log(event);
   if (event.code === "Space" || event.type === "touchstart") {
+    cancelTimer = false;
     if (!spacePressed && !inExecution) {
       spacePressed = true;
       elementTime.classList.add('red');
-      timeoutId = setTimeout(() => {
-        if (spacePressed && !inExecution) {
-          elementTime.classList.remove('red');
-          elementTime.classList.add('green');
-          document.addEventListener("keyup", handleKeyUp);
-          container.addEventListener("touchend", handleKeyUp);
-        }
-      }, 1000);
+      document.addEventListener("keyup", handleCancelTimer);
+      if (!cancelTimer) {
+        timeoutId = setTimeout(() => {
+          if (spacePressed && !inExecution) {
+            isIntervalPassed = true;
+
+            elementTime.textContent = "00:00.00";
+            elementTime.classList.remove('red');
+            elementTime.classList.add('green');
+
+            document.addEventListener("keyup", handleKeyUp);
+            container.addEventListener("touchend", handleKeyUp);
+          }
+        }, 300);
+      }
     } else if (inExecution) {
       stopTimer();
       solvedScramble = generateNewScramble();
     }
   }
 }
+
+function handleCancelTimer(event) {
+  if (!isIntervalPassed) {
+    if (event.code === "Space" || event.type === "touchend") {
+      if (spacePressed) {
+        spacePressed = false;
+        clearTimeout(timeoutId);
+        elementTime.classList.remove('red');
+        cancelTimer = true;
+        elementTime.textContent = "00:00.00";
+      }
+    }
+  }
+  document.removeEventListener("keyup", handleCancelTimer);
+
+}
  
 function handleKeyUp(event) {
+  document.removeEventListener("keyup", handleKeyUp);
   elementTime.classList.remove('green');
   if (event.code === "Space" || event.type === "touchend") {
     if (spacePressed) {
@@ -86,25 +113,35 @@ function startTimer() {
 function stopTimer() {
   if (inExecution) {
     inExecution = false;
+    isIntervalPassed = false;
     clearInterval(interval);
+
 
     const currentTime = formatTime();
     if (currentTime !== "00:00.00") {
       let timeRecords = JSON.parse(localStorage.getItem("times")) || [];
       let id = uuidv4();
 
+      let thisScramble = getScramble(solvedScramble)
+
       const timeRecord = {
         id: id,
         time: currentTime,
-        scramble: solvedScramble,
+        scramble: thisScramble,
       };
 
       timeRecords.push(timeRecord);
 
       localStorage.setItem("times", JSON.stringify(timeRecords));
       populateTableFromLocalStorage();
+      // populateChart();
     }
   }
+}
+
+async function getScramble(scramble) {
+  let xurups = await scramble;
+  return xurups;
 }
 
 function resetTimer() {
