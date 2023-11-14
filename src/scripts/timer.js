@@ -16,7 +16,7 @@ let isIntervalPassed = false;
 let cancelTimer = false;
 
 const elementTime = document.querySelector("#time");
-const container = document.querySelector(".timer");
+const container = document.querySelector(".container");
 
 solvedScramble = generateNewScramble();
 populateTableFromLocalStorage();
@@ -34,6 +34,7 @@ function handleKeyDown(event) {
       spacePressed = true;
       elementTime.classList.add('red');
       document.addEventListener("keyup", handleCancelTimer);
+      container.addEventListener("touchend", handleCancelTimer);
       if (!cancelTimer) {
         timeoutId = setTimeout(() => {
           if (spacePressed && !inExecution) {
