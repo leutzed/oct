@@ -9,7 +9,6 @@ let spacePressed = false;
 let tenths = 0;
 let seconds = 0;
 let minutes = 0;
-let timeRecords = [];
 let interval;
 let solvedScramble;
 let timeoutId;
@@ -29,19 +28,18 @@ if (!inExecution) {
 }
 
 function handleKeyDown(event) {
-  // console.log(event);
   if (event.code === "Space" || event.type === "touchstart") {
     cancelTimer = false;
     if (!spacePressed && !inExecution) {
       spacePressed = true;
       elementTime.classList.add('red');
-      console.log(isIntervalPassed);
       document.addEventListener("keyup", handleCancelTimer);
       if (!cancelTimer) {
         timeoutId = setTimeout(() => {
           if (spacePressed && !inExecution) {
             isIntervalPassed = true;
 
+            elementTime.textContent = "00:00.00";
             elementTime.classList.remove('red');
             elementTime.classList.add('green');
 
@@ -58,10 +56,6 @@ function handleKeyDown(event) {
 }
 
 function handleCancelTimer(event) {
-  console.log('soltou e deveria cancelar');
-  console.log(isIntervalPassed);
-
-
   if (!isIntervalPassed) {
     if (event.code === "Space" || event.type === "touchend") {
       if (spacePressed) {
@@ -69,11 +63,10 @@ function handleCancelTimer(event) {
         clearTimeout(timeoutId);
         elementTime.classList.remove('red');
         cancelTimer = true;
-        console.log('blz');
+        elementTime.textContent = "00:00.00";
       }
     }
   }
-
   document.removeEventListener("keyup", handleCancelTimer);
 
 }
@@ -148,7 +141,6 @@ function stopTimer() {
 
 async function getScramble(scramble) {
   let xurups = await scramble;
-  console.log(xurups);
   return xurups;
 }
 
