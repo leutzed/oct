@@ -4,9 +4,9 @@ import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scrambl
 
 export async function generateNewScramble() {
   const scramble = await randomScrambleForEvent("333");
-
+  
   scrambleView.attributes[1].value = scramble;
   scrambleText.textContent = scramble;
 
-  return scramble;
+  return scrambleText.textContent;
 }

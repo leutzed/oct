@@ -95,10 +95,12 @@ function stopTimer() {
       let timeRecords = JSON.parse(localStorage.getItem("times")) || [];
       let id = uuidv4();
 
+      let thisScramble = getScramble(solvedScramble)
+
       const timeRecord = {
         id: id,
         time: currentTime,
-        scramble: solvedScramble,
+        scramble: thisScramble,
       };
 
       timeRecords.push(timeRecord);
@@ -108,6 +110,12 @@ function stopTimer() {
       // populateChart();
     }
   }
+}
+
+async function getScramble(scramble) {
+  let xurups = await scramble;
+  console.log(xurups);
+  return xurups;
 }
 
 function resetTimer() {
