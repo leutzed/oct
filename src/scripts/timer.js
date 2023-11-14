@@ -13,8 +13,10 @@ let timeRecords = [];
 let interval;
 let solvedScramble;
 let timeoutId;
+let isIntervalPassed = false;
+let cancelTimer = false;
 
-const elementTime = document.querySelector("#tempo");
+const elementTime = document.querySelector("#time");
 const container = document.querySelector(".timer");
 
 solvedScramble = generateNewScramble();
@@ -27,27 +29,57 @@ if (!inExecution) {
 }
 
 function handleKeyDown(event) {
-  console.log(event);
+  // console.log(event);
   if (event.code === "Space" || event.type === "touchstart") {
+    cancelTimer = false;
     if (!spacePressed && !inExecution) {
       spacePressed = true;
       elementTime.classList.add('red');
-      timeoutId = setTimeout(() => {
-        if (spacePressed && !inExecution) {
-          elementTime.classList.remove('red');
-          elementTime.classList.add('green');
-          document.addEventListener("keyup", handleKeyUp);
-          container.addEventListener("touchend", handleKeyUp);
-        }
-      }, 300);
+      console.log(isIntervalPassed);
+      document.addEventListener("keyup", handleCancelTimer);
+      if (!cancelTimer) {
+        timeoutId = setTimeout(() => {
+          if (spacePressed && !inExecution) {
+            isIntervalPassed = true;
+
+            elementTime.classList.remove('red');
+            elementTime.classList.add('green');
+
+            document.addEventListener("keyup", handleKeyUp);
+            container.addEventListener("touchend", handleKeyUp);
+          }
+        }, 300);
+      }
     } else if (inExecution) {
       stopTimer();
       solvedScramble = generateNewScramble();
     }
   }
 }
+
+function handleCancelTimer(event) {
+  console.log('soltou e deveria cancelar');
+  console.log(isIntervalPassed);
+
+
+  if (!isIntervalPassed) {
+    if (event.code === "Space" || event.type === "touchend") {
+      if (spacePressed) {
+        spacePressed = false;
+        clearTimeout(timeoutId);
+        elementTime.classList.remove('red');
+        cancelTimer = true;
+        console.log('blz');
+      }
+    }
+  }
+
+  document.removeEventListener("keyup", handleCancelTimer);
+
+}
  
 function handleKeyUp(event) {
+  document.removeEventListener("keyup", handleKeyUp);
   elementTime.classList.remove('green');
   if (event.code === "Space" || event.type === "touchend") {
     if (spacePressed) {
@@ -88,7 +120,9 @@ function startTimer() {
 function stopTimer() {
   if (inExecution) {
     inExecution = false;
+    isIntervalPassed = false;
     clearInterval(interval);
+
 
     const currentTime = formatTime();
     if (currentTime !== "00:00.00") {
