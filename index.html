@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="src/styles/home.css">
   <link rel="stylesheet" href="src/styles/darkMode.css">
   <link rel="stylesheet" href="src/styles/tabs.css">
-  <script src="https://cdn.cubing.net/js/scramble-display" type="module"></script>
+  <!-- <script src="https://cdn.cubing.net/js/scramble-display" type="module"></script> -->
   <link rel="shortcut icon" href="src/assets/ico.png" type="image/x-icon">
 </head>
 
@@ -18,24 +18,24 @@
     <div class="tab-content">
       <div class="tab-pane" id="logs">
         <div class="info" id="time-data">
+          <table id="times-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Scramble</th>
+                <th>ao5</th>
+                <th>ao12</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <tr>
+                <td>00:00.00</td>
+                <td>R U R' U'</td>
+                <td>15.32</td>
+                <td>16.94</td>
+              </tr>
+          </table>
           <div id="times" class="times">
-            <table>
-              <thead>
-                <tr>
-                  <th>Time</th>
-                  <th>Scramble</th>
-                  <th>ao5</th>
-                  <th>ao12</th>
-                </tr>
-              </thead>
-              <tbody id="tbody">
-                <tr>
-                  <td>00:00.00</td>
-                  <td>R U R' U'</td>
-                  <td>15.32</td>
-                  <td>16.94</td>
-                </tr>
-            </table>
           </div>
         </div>
 

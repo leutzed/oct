@@ -1,57 +1,45 @@
 import { formatTimeWithoutMinutes, timeToDate } from "./utils.js";
 
-export function calculateAo5(arrayTimes) {
-  let arrayInDate = [];
-
-  if (arrayTimes.length < 5) {
+export function calculateAo5 (times) {
+  if (times.length < 5) {
     return "The array needs to have at least 5 records";
   }
 
-  arrayTimes.forEach(function (unit) {
-    let formattedTime = formatTimeWithoutMinutes(unit);
-    let timeInDate = timeToDate(formattedTime);
-    arrayInDate.push(timeInDate);
-  });
+  let timesInMs = times.map(unit => unit.timeInMs);
 
-  arrayInDate = arrayInDate.slice(-5);
-  arrayInDate.sort(function (a, b) {
+  timesInMs = timesInMs.slice(-5);
+  timesInMs.sort(function (a, b) {
     return a - b;
   });
 
-  arrayInDate = arrayInDate.slice(1, -1);
-  var sum = arrayInDate.reduce(function (total, time) {
+  timesInMs = timesInMs.slice(1, -1);
+  var sum = timesInMs.reduce(function (total, time) {
     return total + time;
   }, 0);
 
-  var average = sum / arrayInDate.length;
+  var average = sum / timesInMs.length;
 
   return average;
 }
 
-export function calculateAo12(arrayTimes) {
-  let arrayInDate = [];
-
-  if (arrayTimes.length < 12) {
+export function calculateAo12(times) {
+  if (times.length < 12) {
     return "The array needs to have at least 12 records";
   }
 
-  arrayTimes.forEach(function (unit) {
-    let formattedTime = formatTimeWithoutMinutes(unit);
-    let timeInDate = timeToDate(formattedTime);
-    arrayInDate.push(timeInDate);
-  });
+  let timesInMs = times.map(unit => unit.timeInMs);
 
-  arrayInDate = arrayInDate.slice(-12);
-  arrayInDate.sort(function (a, b) {
+  timesInMs = timesInMs.slice(-12);
+  timesInMs.sort(function (a, b) {
     return a - b;
   });
 
-  arrayInDate = arrayInDate.slice(1, -1);
-  var sum = arrayInDate.reduce(function (total, time) {
+  timesInMs = timesInMs.slice(1, -1);
+  var sum = timesInMs.reduce(function (total, time) {
     return total + time;
   }, 0);
 
-  var average = sum / arrayInDate.length;
+  var average = sum / timesInMs.length;
 
   return average;
 }

@@ -1,5 +1,5 @@
 import { generateNewScramble } from "./scrambles.js";
-import { populateTableFromLocalStorage } from "./populateData.js";
+import { populateTableFromLocalStorage, setAo5 } from "./populateData.js";
 // import { populateChart } from './stats.js'
 
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
@@ -14,6 +14,9 @@ let solvedScramble;
 let timeoutId;
 let isIntervalPassed = false;
 let cancelTimer = false;
+
+let startedAt = 0;
+let endedAt = 0;
 
 const elementTime = document.querySelector("#time");
 const container = document.querySelector(".container");
@@ -91,6 +94,7 @@ function formatTime() {
 }
 
 function startTimer() {
+  startedAt = Date.now();
   if (!inExecution) {
     if (minutes !== 0 || seconds !== 0 || tenths !== 0) {
       resetTimer();
@@ -112,11 +116,13 @@ function startTimer() {
 }
 
 function stopTimer() {
+  endedAt = Date.now();
   if (inExecution) {
     inExecution = false;
     isIntervalPassed = false;
     clearInterval(interval);
 
+    let timeInMs = endedAt - startedAt
 
     const currentTime = formatTime();
     if (currentTime !== "00:00.00") {
@@ -128,6 +134,7 @@ function stopTimer() {
       const timeRecord = {
         id: id,
         time: currentTime,
+        timeInMs: timeInMs,
         scramble: thisScramble,
       };
 
@@ -135,6 +142,7 @@ function stopTimer() {
 
       localStorage.setItem("times", JSON.stringify(timeRecords));
       populateTableFromLocalStorage();
+      setAo5();
       // populateChart();
     }
   }

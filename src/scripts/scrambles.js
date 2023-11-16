@@ -1,6 +1,6 @@
 const scrambleView = document.querySelector("#scramble-display")
 const scrambleText = document.querySelector("#scramble-text")
-import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scramble";
+// import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scramble";
 
 export async function generateNewScramble() {
   const scramble = await randomScrambleForEvent("333");

@@ -10,6 +10,8 @@ function openAlertRemoveTime(event) {
     // Pega o elemento que acionou o evento de clique
     let listElement = event.target;
 
+    console.log(listElement);
+
     getTimeFromLocalStorage(listElement.getAttribute('data-time'));
 
     let isUserRemovingThisTime = confirm(`${listElement.textContent} - [] \n Deseja remover o tempo ${listElement.textContent}?`);
@@ -40,19 +42,19 @@ export function populateTableFromLocalStorage() {
 
   if (storedData) {
     const timeRecords = JSON.parse(storedData);
-    
-    const table = document.querySelector("#times");
+
+    const timesTable = document.querySelector("#tbody");
     const ao5 = document.querySelector("#ao5");
     const ao12 = document.querySelector("#ao12");
     const total = document.querySelector("#total");
     const best = document.querySelector("#best");
 
-    table.innerHTML = "";
+    timesTable.innerHTML = "";
     ao5.innerHTML = "";
 
     let timesArray = objectToArray(timeRecords);
-    let averageOf5 = calculateAo5(timesArray);
-    let averageOf12 = calculateAo12(timesArray);
+    let averageOf5 = calculateAo5(timeRecords);
+    let averageOf12 = calculateAo12(timeRecords);
     let numberOfSolves = totalOfSolves(timesArray)
     let bestSolve = getBestSolve(timesArray)
 
@@ -61,8 +63,11 @@ export function populateTableFromLocalStorage() {
     populateNumberOfSolves(numberOfSolves, total);
     populateBestSolve(bestSolve, best)
 
+    let valueOfAo5 = setAo5()
+
     timeRecords.forEach((record, index) => {
-      addDivWithData(formatTimeWithoutMinutes(record.time), table, index)
+      console.log(record);
+      addTableRecord(formatTimeWithoutMinutes(record.time), timesTable, index, valueOfAo5)
     });
   }
 }
@@ -77,7 +82,32 @@ function addDivWithData(data, table, id) {
   table.appendChild(paragraph)
 }
 
+function addTableRecord(data, table, id, avg5) {
+  const tr = document.createElement("tr")
+
+  const time = document.createElement("td")
+  time.setAttribute('data-time', id);
+  time.textContent = data;
+  time.id = 'list-unique-time';
+
+  const scramble = document.createElement("td")
+  scramble.textContent = "L' D F R' U' R2 F D2 L D' F U2 F2 R2 D2 F2 R2 L2 F' L2 D2"
+
+  const ao5 = document.createElement("td")
+  ao5.textContent = avg5
+
+  const ao12 = document.createElement("td")
+  ao12.textContent = '13.68'
+
+  tr.appendChild(time)
+  tr.appendChild(scramble)
+  tr.appendChild(ao5)
+  tr.appendChild(ao12)
+  table.appendChild(tr)
+}
+
 function populateAverage(average, element) {
+  console.log(average);
   let stringAverage = dateToTime(average)
   let numberAverage = Number(stringAverage);
 
@@ -104,4 +134,23 @@ function populateBestSolve (string, element) {
   } else {
     element.textContent = printBestTime;
   }
+}
+
+function getLast5Solves () {
+  const storedData = localStorage.getItem("times");
+  const timeRecords = JSON.parse(storedData);
+
+  const length = timeRecords.length;
+  const startIndex = length >= 5 ? length - 5 : 0; // Se houver menos de 5 elementos, comece do início
+
+  const last5Solves = timeRecords.slice(startIndex, length);
+  return last5Solves;
+}
+
+export function setAo5 () {
+  const last5Solves = getLast5Solves();
+
+  const avg = calculateAo5(last5Solves)
+
+  return avg;
 }
