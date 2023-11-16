@@ -1,6 +1,7 @@
 import { formatTimeWithoutMinutes, timeToDate } from "./utils.js";
 
 export function calculateAo5 (times) {
+  // console.log(times);
   if (times.length < 5) {
     return "The array needs to have at least 5 records";
   }

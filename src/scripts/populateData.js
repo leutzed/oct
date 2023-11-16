@@ -4,27 +4,6 @@ import { calculateAo5, calculateAo12, totalOfSolves, getBestSolve } from './math
 
 document.addEventListener("click", openAlertRemoveTime);
 
-//TODO
-function openAlertRemoveTime(event) {
-  if (event.target.id == 'list-unique-time') {
-    // Pega o elemento que acionou o evento de clique
-    let listElement = event.target;
-
-    console.log(listElement);
-
-    getTimeFromLocalStorage(listElement.getAttribute('data-time'));
-
-    let isUserRemovingThisTime = confirm(`${listElement.textContent} - [] \n Deseja remover o tempo ${listElement.textContent}?`);
-    if (isUserRemovingThisTime) { 
-      // Remove o elemento da lista
-      listElement.remove();
-      removeTimeFromLocalStorage(listElement.getAttribute('data-time'));
-      populateTableFromLocalStorage();
-      // populateChart();
-    }
-  }
-}
-
 function removeTimeFromLocalStorage(dateTimeId) {
   let timesArray = JSON.parse(localStorage.getItem("times"));
   timesArray.splice(dateTimeId, 1);
@@ -63,24 +42,15 @@ export function populateTableFromLocalStorage() {
     populateNumberOfSolves(numberOfSolves, total);
     populateBestSolve(bestSolve, best)
 
-    let valueOfAo5 = setAo5()
-
     timeRecords.forEach((record, index) => {
-      console.log(record);
-      addTableRecord(formatTimeWithoutMinutes(record.time), timesTable, index, valueOfAo5)
+      let avg5 = getAtLeast5Solves(index, timeRecords);
+      // console.log(avg5);
+      let thisAo5 = calculateAo5(avg5);
+      addTableRecord(formatTimeWithoutMinutes(record.time), timesTable, index, thisAo5)
     });
   }
 }
 
-function addDivWithData(data, table, id) {
-  const paragraph = document.createElement("p")
-  paragraph.classList.add('list')
-  paragraph.id = 'list-unique-time';
-  paragraph.setAttribute('data-time', id);
-  paragraph.textContent = data;
-
-  table.appendChild(paragraph)
-}
 
 function addTableRecord(data, table, id, avg5) {
   const tr = document.createElement("tr")
@@ -94,7 +64,7 @@ function addTableRecord(data, table, id, avg5) {
   scramble.textContent = "L' D F R' U' R2 F D2 L D' F U2 F2 R2 D2 F2 R2 L2 F' L2 D2"
 
   const ao5 = document.createElement("td")
-  ao5.textContent = avg5
+  populateAverage(avg5, ao5)
 
   const ao12 = document.createElement("td")
   ao12.textContent = '13.68'
@@ -103,14 +73,21 @@ function addTableRecord(data, table, id, avg5) {
   tr.appendChild(scramble)
   tr.appendChild(ao5)
   tr.appendChild(ao12)
+
+  // console.log(table.rows.length);
+
+  // if (table.rows.length > 0) {
+  //   let trBefore = element.querySelector('#list-unique-time');
+  //   console.log(trBefore)
+  //   table.insertBefore(tr, trBefore);
+  // }
+
   table.appendChild(tr)
 }
 
 function populateAverage(average, element) {
-  console.log(average);
-  let stringAverage = dateToTime(average)
-  let numberAverage = Number(stringAverage);
-
+  let numberAverage = dateToTime(average)
+  
   if (isNaN(numberAverage)) {
     element.textContent = '---';
   } else {
@@ -136,21 +113,34 @@ function populateBestSolve (string, element) {
   }
 }
 
-function getLast5Solves () {
-  const storedData = localStorage.getItem("times");
-  const timeRecords = JSON.parse(storedData);
-
-  const length = timeRecords.length;
-  const startIndex = length >= 5 ? length - 5 : 0; // Se houver menos de 5 elementos, comece do início
-
-  const last5Solves = timeRecords.slice(startIndex, length);
-  return last5Solves;
+function getAtLeast5Solves(index, array) {
+  if (index < 4) {
+    console.log("Não há registros suficientes antes do índice fornecido para criar um novo array com pelo menos 5 elementos.");
+    return [];
+  }
+  console.log(array);
+  const newArray = array.slice(index - 4, index + 1);
+  console.log(newArray);
+  return newArray;
 }
 
-export function setAo5 () {
-  const last5Solves = getLast5Solves();
+//TODO
+function openAlertRemoveTime(event) {
+  if (event.target.id == 'list-unique-time') {
+    // Pega o elemento que acionou o evento de clique
+    let listElement = event.target;
 
-  const avg = calculateAo5(last5Solves)
+    console.log(listElement);
 
-  return avg;
+    getTimeFromLocalStorage(listElement.getAttribute('data-time'));
+
+    let isUserRemovingThisTime = confirm(`${listElement.textContent} - [] \n Deseja remover o tempo ${listElement.textContent}?`);
+    if (isUserRemovingThisTime) { 
+      // Remove o elemento da lista
+      listElement.remove();
+      removeTimeFromLocalStorage(listElement.getAttribute('data-time'));
+      populateTableFromLocalStorage();
+      // populateChart();
+    }
+  }
 }

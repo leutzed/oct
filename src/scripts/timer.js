@@ -1,5 +1,5 @@
 import { generateNewScramble } from "./scrambles.js";
-import { populateTableFromLocalStorage, setAo5 } from "./populateData.js";
+import { populateTableFromLocalStorage } from "./populateData.js";
 // import { populateChart } from './stats.js'
 
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
@@ -72,7 +72,6 @@ function handleCancelTimer(event) {
     }
   }
   document.removeEventListener("keyup", handleCancelTimer);
-
 }
  
 function handleKeyUp(event) {
@@ -131,6 +130,8 @@ function stopTimer() {
 
       let thisScramble = getScramble(solvedScramble)
 
+      console.log(thisScramble);
+
       const timeRecord = {
         id: id,
         time: currentTime,
@@ -142,15 +143,14 @@ function stopTimer() {
 
       localStorage.setItem("times", JSON.stringify(timeRecords));
       populateTableFromLocalStorage();
-      setAo5();
       // populateChart();
     }
   }
 }
 
 async function getScramble(scramble) {
-  let xurups = await scramble;
-  return xurups;
+  let newScramble = await scramble;
+  return newScramble;
 }
 
 function resetTimer() {

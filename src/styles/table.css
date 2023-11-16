@@ -1,0 +1,8 @@
+/* table#times-table thead{
+  display: flex;
+}
+
+table#times-table tbody{
+  display: flex;
+  flex-direction: column-reverse;
+} */
