@@ -131,6 +131,7 @@ function stopTimer() {
       let thisScramble = getScramble(solvedScramble)
 
       console.log(thisScramble);
+      console.log(solvedScramble);
 
       const timeRecord = {
         id: id,

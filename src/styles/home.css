@@ -24,6 +24,11 @@ body {
   color: var(--dark-white);
 }
 
+.dark-mode div#time-data {
+  background-color: var(--dark-gray);
+  color: var(--dark-white);
+}
+
 h2, p {
   font-family: "Monaco", monospace;
 }
@@ -33,7 +38,7 @@ h2 {
 }
 
 p.list, p.time-indicators {
-  font-size: 1rem;
+  font-size: 1.5em; 
 }
 
 p.list::after {
@@ -76,7 +81,7 @@ p.list::after {
 }
 
 .info {
-  background-color: var(--white);
+  background-color: var(--dark-white);
   grid-area: info;
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;

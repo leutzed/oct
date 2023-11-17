@@ -13,6 +13,6 @@ table#times-table tbody td {
 }
 
 table#times-table tbody td:hover {
-  background-color: var(--dark-white);
+  background-color: var(--light-gray);
   transition: background-color 0.2s ease-in-out;
 }
