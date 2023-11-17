@@ -44,15 +44,18 @@ export function populateTableFromLocalStorage() {
 
     timeRecords.forEach((record, index) => {
       let avg5 = getAtLeast5Solves(index, timeRecords);
-      console.log(record);
       let thisAo5 = calculateAo5(avg5);
-      addTableRecord(formatTimeWithoutMinutes(record.time), timesTable, index, thisAo5, record)
+
+      let avg12 = getAtLeast12Solves(index, timeRecords);
+      let thisAo12 = calculateAo12(avg12);
+      
+      addTableRecord(formatTimeWithoutMinutes(record.time), timesTable, index, thisAo5, thisAo12, record)
     });
   }
 }
 
 
-function addTableRecord(data, table, id, avg5, record) {
+function addTableRecord(data, table, id, avg5, avg12, record) {
   const tr = document.createElement("tr")
 
   const time = document.createElement("td")
@@ -76,7 +79,7 @@ function addTableRecord(data, table, id, avg5, record) {
   populateAverage(avg5, ao5)
 
   const ao12 = document.createElement("td")
-  ao12.textContent = '13.57'
+  populateAverage(avg12, ao12)
 
   tr.appendChild(time)
   tr.appendChild(scramble)
@@ -129,6 +132,17 @@ function getAtLeast5Solves(index, array) {
   }
   console.log(array);
   const newArray = array.slice(index - 4, index + 1);
+  console.log(newArray);
+  return newArray;
+}
+
+function getAtLeast12Solves(index, array) {
+  if (index < 11) {
+    console.log("Não há registros suficientes antes do índice fornecido para criar um novo array com pelo menos 12 elementos.");
+    return [];
+  }
+  console.log(array);
+  const newArray = array.slice(index - 11, index + 1);
   console.log(newArray);
   return newArray;
 }
