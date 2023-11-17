@@ -44,15 +44,15 @@ export function populateTableFromLocalStorage() {
 
     timeRecords.forEach((record, index) => {
       let avg5 = getAtLeast5Solves(index, timeRecords);
-      // console.log(avg5);
+      console.log(record);
       let thisAo5 = calculateAo5(avg5);
-      addTableRecord(formatTimeWithoutMinutes(record.time), timesTable, index, thisAo5)
+      addTableRecord(formatTimeWithoutMinutes(record.time), timesTable, index, thisAo5, record)
     });
   }
 }
 
 
-function addTableRecord(data, table, id, avg5) {
+function addTableRecord(data, table, id, avg5, record) {
   const tr = document.createElement("tr")
 
   const time = document.createElement("td")
@@ -61,13 +61,22 @@ function addTableRecord(data, table, id, avg5) {
   time.id = 'list-unique-time';
 
   const scramble = document.createElement("td")
-  scramble.textContent = "L' D F R' U' R2 F D2 L D' F U2 F2 R2 D2 F2 R2 L2 F' L2 D2"
+  const details = document.createElement("details")
+  const summary = document.createElement("summary")
+  const p = document.createElement("p")
+
+  p.textContent = "L' D F R' U' R2 F D2 L D' F U2 F2 R2 D2 F2 R2 L2 F' L2 D2"
+  summary.textContent = "scramble"
+
+  details.appendChild(summary)
+  details.appendChild(p)
+  scramble.appendChild(details)
 
   const ao5 = document.createElement("td")
   populateAverage(avg5, ao5)
 
   const ao12 = document.createElement("td")
-  ao12.textContent = '13.68'
+  ao12.textContent = '13.57'
 
   tr.appendChild(time)
   tr.appendChild(scramble)

@@ -1,8 +1,18 @@
 /* table#times-table thead{
   display: flex;
-}
+} */
 
 table#times-table tbody{
-  display: flex;
-  flex-direction: column-reverse;
-} */
+  border: 1px solid #000;
+}
+
+table#times-table tbody td {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+table#times-table tbody td:hover {
+  background-color: var(--dark-white);
+  transition: background-color 0.2s ease-in-out;
+}

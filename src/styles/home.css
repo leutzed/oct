@@ -24,8 +24,11 @@ body {
   color: var(--dark-white);
 }
 
-p {
+h2, p {
   font-family: "Monaco", monospace;
+}
+
+h2 {
   font-size: 3rem;
 }
 
@@ -73,6 +76,7 @@ p.list::after {
 }
 
 .info {
+  background-color: var(--white);
   grid-area: info;
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
