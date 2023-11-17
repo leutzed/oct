@@ -150,8 +150,9 @@ function stopTimer() {
 }
 
 async function getScramble(scramble) {
-  let newScramble = await scramble;
-  return newScramble;
+  scramble.then((res) => {
+    return res;
+  });
 }
 
 function resetTimer() {
